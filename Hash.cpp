@@ -1,0 +1,101 @@
+#include "Heash.h"
+
+hashTable::hashTable(int size)
+{
+  
+  int i;
+  hashSize = size;
+  hasher = new int [hashSize];
+
+  for(i = 0; i < hashSize; i++)
+	{
+	  hasher[i] = -1;
+	}
+}
+bool hashTable::insertHash(const int &item)
+{
+  int index;
+  int fullMarker = 0;
+  index = item % hashSize;
+  while(hasher[index] > -1)
+	{
+	  if(hasher[index] == item) {
+		cerr << "Duplicate Item" << endl;
+		return false;
+	  }
+	  ++index;
+	  fullMarker++;
+
+	  if(index == hashSize){
+		index = 0;
+	  }
+	  if(fullMarker == hashSize)
+		{
+		  cerr<< "Full Table" << endl;
+		  return false;
+		}
+	}
+  hasher[index] = item;
+  return true;
+
+}
+
+bool hashTable::remove(int item)
+{
+  int tracker = item % hashSize;
+  int searchedAll = 0;
+
+  while(hasher[tracker] != item)
+	{
+	  ++tracker;
+	  searchedAll++;
+
+	  if(searchedAll == hashSize) //Should return false only when all checked
+		{
+		  cerr << "Unable to find: " << item << endl;
+		  return false;
+		}
+	}
+  //If it escapes the loop, it should have found it.
+  hasher[tracker] = -1;
+  return true;
+  
+}
+
+bool hashTable::find (const int &item)
+{
+  int index = item % hashSize;
+  int searchedAll = 0;
+
+  while(hasher[index] != item)
+	{
+	  ++index;
+	  searchedAll++;
+	  if(index == hashSize) {
+		index = 0;
+	  }
+	  if(searchedAll == hashSize)
+		{
+		  return false;
+		}
+	}
+  return true; //Should return true if it broke out of the while loop
+  
+}
+
+
+void hashTable::printHash()
+{
+  int j;
+  for (j = 0; j < hashSize; j++) {
+	if(hasher[j] < 0)
+	  {
+		cout << "[]";
+	  }
+	else
+	  {
+		cout <<"["<< hasher[j]<<"]";
+	  }
+  }
+  cout << endl << endl;
+}

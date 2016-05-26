@@ -1,0 +1,29 @@
+#include <iostream>
+#include "Heap.h"
+//#include "Heash.h"
+
+using namespace std;
+
+int main()
+{
+  //heash h;
+
+  heaper he(21);
+
+  he.insert(55);
+  he.insert(66);
+  he.insert(32);
+  he.insert(81);
+  he.insert(16);
+  he.insert(99);
+  he.insert(74);
+  he.insert(43);
+
+  he.deleteMin();
+
+  he.printHeap();
+  cout << endl;
+
+  
+  return 0;
+}
